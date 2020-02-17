@@ -45,10 +45,10 @@ pipeline {
           // }
           for (config in buildConfig) {
             echo "config: ${config}"
-            
+
             if (config.value.isChanged) {
               stage("build: ${config.key}") {
-                steps{
+                steps {
                   echo "build..... ${config}"
                 }
               }
