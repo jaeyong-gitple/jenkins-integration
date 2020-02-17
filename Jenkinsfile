@@ -9,13 +9,14 @@ pipeline {
             // Given our default value is true, this should 
             // run if I don't change the parameter from its 
             // default value of true, to false.
-          return hasTargetPath('server/aa');
+          return hasTargetPath('server/aa')
         }
       }
       steps {
         script {
           stage('NewOne') {
             echo('new one echo')
+            echo hasTargetPath('server/aa')
           }
         }
       }
