@@ -61,14 +61,19 @@ def getChangeString() {
 
     for (int j = 0; j < entries.length; j++) {
       def entry = entries[j]
-      def files = entry.getAffectedFiles()
+      // def files = entry.getAffectedFiles()
 
       // testjy
       println "entry: $entry"
-      for (int k = 0; k < files.size(); k++) {
-        def file = files[k]
-        println "  ${file.editType.name} ${file.path}"
+
+      for (file in entry.getAffectedFiles()) {
+        println "  ${file.editType.name} ${file.getPath()}"
       }
+
+      // for (int k = 0; k < files.size(); k++) {
+      //   def file = files[k]
+      //   println "  ${file.editType.name} ${file.path}"
+      // }
 
       truncated_msg = entry.msg.take(MAX_MSG_LEN)
 
