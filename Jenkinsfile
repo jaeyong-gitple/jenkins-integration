@@ -9,9 +9,7 @@ pipeline {
 
         script {
           stage('NewOne') {
-            steps {
-              echo('new one echo')
-            }
+            echo('new one echo')
           }
         }
       }
