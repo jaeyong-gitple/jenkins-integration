@@ -67,7 +67,7 @@ def getChangeString() {
       println "entry: $entry"
       for (int k = 0; k < files.size(); k++) {
         def file = files[k]
-        echo "  ${file.editType.name} ${file.path}"
+        println "  ${file.editType.name} ${file.path}"
       }
 
       truncated_msg = entry.msg.take(MAX_MSG_LEN)
