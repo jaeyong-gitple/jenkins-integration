@@ -19,10 +19,7 @@ pipeline {
           buildConfig.app = [path: 'server/app', isChanged: false , build: 'make app', deploy: 'deploy app']
           buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'make hello', deploy: 'deploy hello']
 
-          // stage('NewOne') {
-          //   echo('new one echo')
-          //   echo hasTargetPath('server/aa')
-          // }
+          findTargetPath(buildConfig);
         }
 
         echo "${buildConfig}" 
@@ -62,7 +59,7 @@ pipeline {
 }
 
 @NonCPS
-def hasTargetPath(targetPath) {
+def findTargetPath(buildConfig) {
   // echo "Gathering SCM changes"
   def changeLogSets = currentBuild.changeSets
 
@@ -73,7 +70,15 @@ def hasTargetPath(targetPath) {
       def entry = entries[j]
 
       for (file in entry.getAffectedFiles()) {
-        println "path: ${file.getPath()}"
+        def filePath = file.getPath()
+        // println "path: ${file.getPath()}"
+
+        for (config in buildConfig) {
+          println "config: ${config}"
+          if (config.path ==~ /${filePath}(.*)/) {
+            println "found Path '${filePath}' contains '${config}'"
+          }
+        }
       }
     }
   }
