@@ -61,11 +61,14 @@ def getChangeString() {
 
     for (int j = 0; j < entries.length; j++) {
       def entry = entries[j]
+      def affectedFiles = entry.getAffectedFiles()
 
       // testjy
       println "entry: $entry"
+      println "affectedFiles: $affectedFiles"
 
       truncated_msg = entry.msg.take(MAX_MSG_LEN)
+
 
       // testjy
       println "truncated_msg: $truncated_msg"
