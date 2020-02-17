@@ -67,7 +67,7 @@ def getChangeString() {
       println "entry: $entry"
 
       for (file in entry.getAffectedFiles()) {
-        println "  ${file.editType.name} ${file.getPath()}"
+        println "path: ${file.getPath()}"
       }
 
       // for (int k = 0; k < files.size(); k++) {
