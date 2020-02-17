@@ -27,19 +27,16 @@ pipeline {
     }
 
     stage('Build') {
-      parallel {
-        stage('Build') {
-          steps {
-            echo "Building.. ${buildConfig}"
+      steps {
+        script {
+          for (config in ${buildConfig}) {
+            if (config.value.isChanged) {
+              stage("build: ${config.value.key}") {
+                echo "build..... ${config}"
+              }
+            }
           }
         }
-
-        stage('Build2') {
-          steps {
-            echo 'build2'
-          }
-        }
-
       }
     }
 
@@ -84,56 +81,4 @@ def findTargetPath(buildConfig) {
       }
     }
   }
-}
-
-@NonCPS
-def getChangeString() {
-  MAX_MSG_LEN = 100
-  def changeString = ""
-
-  echo "Gathering SCM changes"
-  def changeLogSets = currentBuild.changeSets
-
-  // testjy
-  println "changeLogSets: $changeLogSets"
-
-  for (int i = 0; i < changeLogSets.size(); i++) {
-    def entries = changeLogSets[i].items
-
-    // testjy
-    println "entries: $entries"
-
-    for (int j = 0; j < entries.length; j++) {
-      def entry = entries[j]
-      // def files = entry.getAffectedFiles()
-
-      // testjy
-      println "entry: $entry"
-
-      for (file in entry.getAffectedFiles()) {
-        println "path: ${file.getPath()}"
-      }
-
-      // for (int k = 0; k < files.size(); k++) {
-      //   def file = files[k]
-      //   println "  ${file.editType.name} ${file.path}"
-      // }
-
-      truncated_msg = entry.msg.take(MAX_MSG_LEN)
-
-      // testjy
-      println "truncated_msg: $truncated_msg"
-
-      changeString += " - ${truncated_msg} [${entry.author}]\n"
-    }
-  }
-
-  if (!changeString) {
-    changeString = " - No new changes"
-  }
-
-  // testjy
-  println "changeString: $changeString"
-
-  return changeString
 }
