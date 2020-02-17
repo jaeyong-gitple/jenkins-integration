@@ -76,7 +76,7 @@ def findTargetPath(buildConfig) {
         for (config in buildConfig) {
           println "config key: ${config.key}"
           println "config value: ${config.value}"
-          if (config.value.path ==~ /${filePath}(.*)/) {
+          if (filePath ==~ /${config.value.path}(.*)/) {
             println "found Path '${filePath}' contains '${config}'"
           }
         }
