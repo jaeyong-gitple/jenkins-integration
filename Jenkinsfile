@@ -3,21 +3,26 @@
 pipeline {
   agent any
   stages {
-    stage('Get Changed') {
-      when {
-        expression {
-            // Given our default value is true, this should 
-            // run if I don't change the parameter from its 
-            // default value of true, to false.
-          return true // hasTargetPath('server/aa')
-        }
-      }
+    stage('Prepare') {
+      // when {
+      //   expression {
+      //       // Given our default value is true, this should 
+      //       // run if I don't change the parameter from its 
+      //       // default value of true, to false.
+      //     return true // hasTargetPath('server/aa')
+      //   }
+      // }
       steps {
         script {
-          stage('NewOne') {
-            echo('new one echo')
-            echo hasTargetPath('server/aa')
-          }
+          def buildConfig = [:]
+
+          buildConfig.app = [path: 'server/app', isChanged: false , build: 'make app', deploy: 'deploy app']
+          buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'make hello', deploy: 'deploy hello']
+
+          // stage('NewOne') {
+          //   echo('new one echo')
+          //   echo hasTargetPath('server/aa')
+          // }
         }
       }
     }
@@ -26,7 +31,7 @@ pipeline {
       parallel {
         stage('Build') {
           steps {
-            echo 'Building..'
+            echo 'Building..' $buildConfig
           }
         }
 
