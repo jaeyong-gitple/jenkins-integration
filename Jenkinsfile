@@ -14,7 +14,7 @@ pipeline {
       // }
       steps {
         script {
-          def buildConfig = [:]
+          buildConfig = [:]
 
           buildConfig.app = [path: 'server/app', isChanged: false , build: 'make app', deploy: 'deploy app']
           buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'make hello', deploy: 'deploy hello']
