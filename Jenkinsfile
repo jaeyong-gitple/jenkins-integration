@@ -51,7 +51,7 @@ def getChangeString() {
   def changeLogSets = currentBuild.changeSets
 
   // testjy
-  println "changeLogSets: $changeLogSets.toString()"
+  println "changeLogSets: $changeLogSets"
   // print 'changeLogSets.size:'
   // print changeLogSets.size()
 
