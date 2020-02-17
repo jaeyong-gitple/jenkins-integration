@@ -4,7 +4,9 @@ pipeline {
   agent any
   stages {
     stage('Get Changed') {
-      getChangeString()
+      steps {
+        getChangeString()
+      }
     }
 
     stage('Build') {
