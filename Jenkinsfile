@@ -29,27 +29,31 @@ pipeline {
     stage('Build') {
       steps {
         script {
-          for (int i = 0; i < buildConfig.size(); ++i) {
-            def config = buildConfig[i];
-            echo "config: ${config}"
-            // def configValue = buildConfig[i].value;
-            // if (configValue.isChanged) {
-            //   stage("build: ${configKey}") {
-            //     steps {
-            //       echo "build..... ${configValue}"
-            //     }
-            //   }
-            // }
+          // for (int i = 0; i < buildConfig.size(); ++i) {
+          //   def config = buildConfig[i];
+          //   echo "config: ${config}"
+          //   // def configValue = buildConfig[i].value;
+          //   // if (configValue.isChanged) {
+          //   //   stage("build: ${configKey}") {
+          //   //     steps {
+          //   //       echo "build..... ${configValue}"
+          //   //     }
+          //   //   }
+          //   // }
 
-            // echo "Testing the ${browsers[i]} browser"
-          }
-          // for (config in buildConfig) {
-          //   if (config.value.isChanged) {
-          //     stage("build: ${config.key}") {
-          //       echo "build..... ${config}"
-          //     }
-          //   }
+          //   // echo "Testing the ${browsers[i]} browser"
           // }
+          for (config in buildConfig) {
+            echo "config: ${config}"
+            
+            if (config.value.isChanged) {
+              stage("build: ${config.key}") {
+                steps{
+                  echo "build..... ${config}"
+                }
+              }
+            }
+          }
         }
 
         echo "build done" 
