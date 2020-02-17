@@ -37,6 +37,8 @@ pipeline {
             }
           }
         }
+
+        echo "build done" 
       }
     }
 
