@@ -61,14 +61,16 @@ def getChangeString() {
 
     for (int j = 0; j < entries.length; j++) {
       def entry = entries[j]
-      def affectedFiles = entry.getAffectedFiles()
+      def files = new ArrayList(entry.affectedFiles)
 
       // testjy
       println "entry: $entry"
-      println "affectedFiles: ${affectedFiles.getPath()}"
+      for (int k = 0; k < files.size(); k++) {
+        def file = files[k]
+        echo "  ${file.editType.name} ${file.path}"
+      }
 
       truncated_msg = entry.msg.take(MAX_MSG_LEN)
-
 
       // testjy
       println "truncated_msg: $truncated_msg"
