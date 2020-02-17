@@ -9,7 +9,7 @@ pipeline {
             // Given our default value is true, this should 
             // run if I don't change the parameter from its 
             // default value of true, to false.
-          return hasTargetPath('server/aa')
+          return true // hasTargetPath('server/aa')
         }
       }
       steps {
