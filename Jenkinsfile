@@ -4,9 +4,15 @@ pipeline {
   agent any
   stages {
     stage('Get Changed') {
+      when {
+        expression {
+            // Given our default value is true, this should 
+            // run if I don't change the parameter from its 
+            // default value of true, to false.
+          return hasTargetPath('server/aa');
+        }
+      }
       steps {
-        getChangeString()
-
         script {
           stage('NewOne') {
             echo('new one echo')
@@ -45,6 +51,26 @@ pipeline {
     }
 
   }
+}
+
+@NonCPS
+def hasTargetPath(targetPath) {
+  // echo "Gathering SCM changes"
+  def changeLogSets = currentBuild.changeSets
+
+  for (int i = 0; i < changeLogSets.size(); i++) {
+    def entries = changeLogSets[i].items
+
+    for (int j = 0; j < entries.length; j++) {
+      def entry = entries[j]
+
+      for (file in entry.getAffectedFiles()) {
+        println "path: ${file.getPath()}"
+      }
+    }
+  }
+
+  return false
 }
 
 @NonCPS
