@@ -30,15 +30,17 @@ pipeline {
       steps {
         script {
           for (int i = 0; i < buildConfig.size(); ++i) {
-            def configKey = buildConfig[i].key;
-            def configValue = buildConfig[i].value;
-            if (configValue.isChanged) {
-              stage("build: ${configKey}") {
-                steps {
-                  echo "build..... ${configValue}"
-                }
-              }
-            }
+            def config = buildConfig[i];
+            echo "config: ${config}"
+            // def configValue = buildConfig[i].value;
+            // if (configValue.isChanged) {
+            //   stage("build: ${configKey}") {
+            //     steps {
+            //       echo "build..... ${configValue}"
+            //     }
+            //   }
+            // }
+
             // echo "Testing the ${browsers[i]} browser"
           }
           // for (config in buildConfig) {
