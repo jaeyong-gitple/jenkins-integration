@@ -6,11 +6,18 @@ pipeline {
     stage('Get Changed') {
       steps {
         getChangeString()
+
+        script {
+          stage('NewOne') {
+            steps {
+              echo('new one echo')
+            }
+          }
+        }
       }
     }
 
     stage('Build') {
-
       parallel {
         stage('Build') {
           steps {
