@@ -3,9 +3,11 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
-
+    stage('Get Changed') {
       getChangeString()
+    }
+
+    stage('Build') {
 
       parallel {
         stage('Build') {
