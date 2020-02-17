@@ -24,6 +24,8 @@ pipeline {
           //   echo hasTargetPath('server/aa')
           // }
         }
+
+        echo "${buildConfig}" 
       }
     }
 
