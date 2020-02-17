@@ -43,18 +43,25 @@ pipeline {
 
           //   // echo "Testing the ${browsers[i]} browser"
           // }
+
+          def buildStages = [:]
+
           for (config in buildConfig) {
-            sleep 1
             echo "config: ${config}"
 
             if (config.value.isChanged) {
-              stage("build: ${config.key}") {
-                steps {
-                  echo "build..... ${config}"
+              buildStages[config.key] = {
+                stage("build: ${config.key}") {
+                  steps {
+                    echo "build..... ${config}"
+                  }
                 }
               }
+              
             }
           }
+
+          buildStages
         }
 
         echo "build done" 
