@@ -65,7 +65,7 @@ def getChangeString() {
 
       // testjy
       println "entry: $entry"
-      println "affectedFiles: $affectedFiles.getPath()"
+      println "affectedFiles: ${affectedFiles.getPath()}"
 
       truncated_msg = entry.msg.take(MAX_MSG_LEN)
 
