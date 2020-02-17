@@ -29,7 +29,7 @@ pipeline {
     stage('Build') {
       steps {
         script {
-          for (config in ${buildConfig}) {
+          for (config in buildConfig) {
             if (config.value.isChanged) {
               stage("build: ${config.value.key}") {
                 echo "build..... ${config}"
