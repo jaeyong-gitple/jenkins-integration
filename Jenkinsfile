@@ -61,7 +61,7 @@ def getChangeString() {
 
     for (int j = 0; j < entries.length; j++) {
       def entry = entries[j]
-      def files = new ArrayList(entry.affectedFiles)
+      def files = entry.getAffectedFiles()
 
       // testjy
       println "entry: $entry"
