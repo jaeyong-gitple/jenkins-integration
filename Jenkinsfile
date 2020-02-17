@@ -61,7 +61,7 @@ pipeline {
             }
           }
 
-          buildStages
+          echo "build stages: ${buildStages}"
         }
 
         echo "build done" 
