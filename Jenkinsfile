@@ -51,13 +51,17 @@ def getChangeString() {
   def changeLogSets = currentBuild.changeSets
 
   // testjy
-  print 'changeLogSets:'
-  print changeLogSets
+  println "changeLogSets: $changeLogSets.toString()"
+  // print 'changeLogSets.size:'
+  // print changeLogSets.size()
 
   for (int i = 0; i < changeLogSets.size(); i++) {
     def entries = changeLogSets[i].items
     for (int j = 0; j < entries.length; j++) {
       def entry = entries[j]
+
+
+
       truncated_msg = entry.msg.take(MAX_MSG_LEN)
       changeString += " - ${truncated_msg} [${entry.author}]\n"
     }
