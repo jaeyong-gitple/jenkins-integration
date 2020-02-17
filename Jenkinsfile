@@ -31,7 +31,7 @@ pipeline {
       parallel {
         stage('Build') {
           steps {
-            echo 'Building..' $buildConfig
+            echo 'Building.. ${buildConfig}'
           }
         }
 
