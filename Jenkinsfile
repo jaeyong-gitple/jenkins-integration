@@ -71,7 +71,7 @@ def findTargetPath(buildConfig) {
 
       for (file in entry.getAffectedFiles()) {
         def filePath = file.getPath()
-        // println "path: ${file.getPath()}"
+        println "path: ${filePath}"
 
         for (config in buildConfig) {
           println "config key: ${config.key}"
