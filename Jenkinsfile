@@ -74,17 +74,16 @@ def findTargetPath(buildConfig) {
         println "path: ${filePath}"
 
         for (config in buildConfig) {
-          println "config key: ${config.key}"
-          println "config value: ${config.value}"
+          // println "config key: ${config.key}"
+          // println "config value: ${config.value}"
           if (filePath ==~ /${config.value.path}(.*)/) {
             println "found Path '${filePath}' contains '${config}'"
+            config.value.isChanged = true
           }
         }
       }
     }
   }
-
-  return false
 }
 
 @NonCPS
