@@ -51,7 +51,8 @@ def getChangeString() {
   def changeLogSets = currentBuild.changeSets
 
   // testjy
-  echo 'changeLogSets' changeLogSets;
+  print 'changeLogSets:'
+  print changeLogSets
 
   for (int i = 0; i < changeLogSets.size(); i++) {
     def entries = changeLogSets[i].items
