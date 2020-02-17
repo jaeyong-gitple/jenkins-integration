@@ -52,17 +52,24 @@ def getChangeString() {
 
   // testjy
   println "changeLogSets: $changeLogSets"
-  // print 'changeLogSets.size:'
-  // print changeLogSets.size()
 
   for (int i = 0; i < changeLogSets.size(); i++) {
     def entries = changeLogSets[i].items
+
+    // testjy
+    println "entries: $entries"
+
     for (int j = 0; j < entries.length; j++) {
       def entry = entries[j]
 
-
+      // testjy
+      println "entry: $entry"
 
       truncated_msg = entry.msg.take(MAX_MSG_LEN)
+
+      // testjy
+      println "truncated_msg: $truncated_msg"
+
       changeString += " - ${truncated_msg} [${entry.author}]\n"
     }
   }
@@ -70,5 +77,9 @@ def getChangeString() {
   if (!changeString) {
     changeString = " - No new changes"
   }
+
+  // testjy
+  println "changeString: $changeString"
+
   return changeString
 }
