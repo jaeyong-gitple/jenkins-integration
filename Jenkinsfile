@@ -34,8 +34,19 @@ pipeline {
               return true // hasTargetPath('server/aa')
             }
           }
-
-          echo "${buildConfig['app']}"
+          steps {
+            echo "${buildConfig['app']}"
+          }
+        }
+        stage('Build: hello') {
+          when {
+            expression {
+              return true // hasTargetPath('server/aa')
+            }
+          }
+          steps {
+            echo "${buildConfig['hello']}"
+          }
         }
       }
     }
