@@ -16,6 +16,7 @@ pipeline {
           buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'make hello', deploy: 'deploy hello']
 
           findTargetPath(buildConfig)
+          buildTarget(buildConfig['app'])
         }
 
         echo "${buildConfig}"
@@ -95,8 +96,8 @@ def buildTarget(buildConfig) {
     remote.name = env.REMOTE_HOST
     remote.host = env.REMOTE_HOST
     remote.allowAnyHosts = true
-    remote.user = userName
-    remote.identityFile = identity 
+    remote.user = $userName
+    remote.identityFile = $identity 
     sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;ls'
   }
 }
