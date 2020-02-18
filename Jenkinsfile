@@ -27,7 +27,7 @@ pipeline {
 
           withCredentials([sshUserPrivateKey(credentialsId: 'ci-ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
             def remote = [:]
-            // remote.name = "test-ssh-vm"
+            remote.name = env.REMOTE_HOST
             remote.host = env.REMOTE_HOST
             remote.allowAnyHosts = true
             remote.user = userName
