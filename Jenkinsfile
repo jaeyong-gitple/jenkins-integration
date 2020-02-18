@@ -32,7 +32,7 @@ pipeline {
             remote.allowAnyHosts = true
             remote.user = userName
             remote.identityFile = identity 
-            shCommand remote: remote, command: 'ls'
+            sshCommand remote: remote, command: 'ls'
           }
         }
 
