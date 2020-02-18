@@ -5,7 +5,6 @@ pipeline {
   environment {
     REMOTE_HOST = 'ci-staging.mspdev.link'
     REMOTE_USER = 'ubuntu'
-    REMOTE_USER = credentials('ci-ssh')
   }
   stages {
     stage('Prepare') {
