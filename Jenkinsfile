@@ -2,6 +2,11 @@
 
 pipeline {
   agent any
+  environment {
+    REMOTE_HOST = 'ci-staging.mspdev.link'
+    REMOTE_USER = 'ubuntu'
+    REMOTE_USER = credentials('ci-ssh')
+  }
   stages {
     stage('Prepare') {
       // when {
@@ -23,7 +28,16 @@ pipeline {
         }
 
         echo "${buildConfig}" 
-      }
+
+        withCredentials([sshUserPrivateKey(credentialsId: 'ci-ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+          def remote = [:]
+          // remote.name = "test-ssh-vm"
+          remote.host = env.REMOTE_HOST
+          remote.allowAnyHosts = true
+          remote.user = userName
+          remote.identityFile = identity //remote.passphrase = passphrase stage("SSH Steps Rocks!") { writeFile file: 'test.sh', text: 'ls' sshCommand remote: remote, command: 'for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done' sshScript remote: remote, script: 'test.sh' sshPut remote: remote, from: 'test.sh', into: '.' sshGet remote: remote, from: 'test.sh', into: 'test_new.sh', override: true sshRemove remote: remote, path: 'test.sh' } }
+          shCommand remote: remote, command: 'ls'
+        }
     }
 
     stage('Build') {
