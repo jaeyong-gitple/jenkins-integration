@@ -5,7 +5,6 @@ pipeline {
   environment {
     REMOTE_HOST = 'ci-staging.mspdev.link'
     REMOTE_USER = 'ubuntu'
-    REMOTE_PATH = 
   }
   stages {
     stage('Prepare') {
@@ -30,6 +29,7 @@ pipeline {
         }
 
         echo "${buildConfig}"
+        sh "printenv"
       }
     }
 
