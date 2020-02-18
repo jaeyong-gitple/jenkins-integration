@@ -24,7 +24,7 @@ pipeline {
             remote.allowAnyHosts = true
             remote.user = userName
             remote.identityFile = identity 
-            sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;git '
+            sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;ls'
           }
         }
 
