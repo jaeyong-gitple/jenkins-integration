@@ -17,7 +17,7 @@ pipeline {
 
           findTargetPath(buildConfig);
 
-          // buildTarget(buildConfig['app']);
+          
         }
 
         echo "${buildConfig}"
