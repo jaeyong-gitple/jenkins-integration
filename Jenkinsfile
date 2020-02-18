@@ -29,8 +29,7 @@ pipeline {
           }
         }
 
-        echo "${buildConfig}"  
-        sh "printenv"
+        echo "${buildConfig}"
       }
     }
 
