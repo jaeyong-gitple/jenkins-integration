@@ -33,28 +33,24 @@ pipeline {
       }
     }
 
-    stage('Build') {
-      stages {
-        stage('Build: app') {
-          when {
-            expression {
-              return buildConfig['app'].isChanged
-            }
-          }
-          steps {
-            echo "${buildConfig['app']}"
-          }
+    stage('Build: app') {
+      when {
+        expression {
+          return buildConfig['app'].isChanged
         }
-        stage('Build: hello') {
-          when {
-            expression {
-              return buildConfig['hello'].isChanged
-            }
-          }
-          steps {
-            echo "${buildConfig['hello']}"
-          }
+      }
+      steps {
+        echo "${buildConfig['app']}"
+      }
+    }
+    stage('Build: hello') {
+      when {
+        expression {
+          return buildConfig['hello'].isChanged
         }
+      }
+      steps {
+        echo "${buildConfig['hello']}"
       }
     }
 
