@@ -16,15 +16,14 @@ pipeline {
           buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'make hello', deploy: 'deploy hello']
 
           findTargetPath(buildConfig);
+
+          buildTarget(buildConfig['app']);
         }
 
         echo "${buildConfig}"
         // default env
         // GIT_COMMIT=520843eb66353c8dfa40ca24c82dced3beafc482
         // GIT_BRANCH=develop
-
-
-        buildTarget(buildConfig['app']);
 
         sh "printenv"
       }
