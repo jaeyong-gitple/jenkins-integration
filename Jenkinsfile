@@ -31,7 +31,7 @@ pipeline {
         stage('Build: app') {
           when {
             expression {
-              return true // hasTargetPath('server/aa')
+              return buildConfig['app'].isChanged
             }
           }
           steps {
@@ -41,7 +41,7 @@ pipeline {
         stage('Build: hello') {
           when {
             expression {
-              return true // hasTargetPath('server/aa')
+              return buildConfig['hello'].isChanged
             }
           }
           steps {
