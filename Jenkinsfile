@@ -27,45 +27,16 @@ pipeline {
     }
 
     stage('Build') {
-      steps {
-        script {
-          // for (int i = 0; i < buildConfig.size(); ++i) {
-          //   def config = buildConfig[i];
-          //   echo "config: ${config}"
-          //   // def configValue = buildConfig[i].value;
-          //   // if (configValue.isChanged) {
-          //   //   stage("build: ${configKey}") {
-          //   //     steps {
-          //   //       echo "build..... ${configValue}"
-          //   //     }
-          //   //   }
-          //   // }
-
-          //   // echo "Testing the ${browsers[i]} browser"
-          // }
-
-          def buildStages = [:]
-
-          for (config in buildConfig) {
-            echo "config: ${config}"
-
-            if (config.value.isChanged) {
-              buildStages[config.key] = {
-                stage("build: ${config.key}") {
-                  steps {
-                    echo "build..... ${config}"
-                  }
-                }
-              }
-              
+      stages {
+        stage('Build: app') {
+          when {
+            expression {
+              return true // hasTargetPath('server/aa')
             }
           }
 
-          echo "build stages: ${buildStages}"
-          stages buildStages
+          echo "${buildConfig['app']}"
         }
-
-        echo "build done" 
       }
     }
 
