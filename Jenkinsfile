@@ -5,17 +5,10 @@ pipeline {
   environment {
     REMOTE_HOST = 'ci-staging.mspdev.link'
     REMOTE_USER = 'ubuntu'
+    REMOTE_PATH = 
   }
   stages {
     stage('Prepare') {
-      // when {
-      //   expression {
-      //       // Given our default value is true, this should 
-      //       // run if I don't change the parameter from its 
-      //       // default value of true, to false.
-      //     return true // hasTargetPath('server/aa')
-      //   }
-      // }
       steps {
         script {
           buildConfig = [:]
@@ -32,13 +25,12 @@ pipeline {
             remote.allowAnyHosts = true
             remote.user = userName
             remote.identityFile = identity 
-            sshCommand remote: remote, command: 'ls'
+            sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;git '
           }
         }
 
-        echo "${buildConfig}" 
-
-        
+        echo "${buildConfig}"  
+        sh "printenv"
       }
     }
 
@@ -72,13 +64,6 @@ pipeline {
         echo 'Testing..'
       }
     }
-
-    stage('Deploy') {
-      steps {
-        echo 'Deploying....'
-      }
-    }
-
   }
 }
 
