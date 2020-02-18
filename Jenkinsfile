@@ -16,7 +16,6 @@ pipeline {
           buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'make hello', deploy: 'deploy hello']
 
           findTargetPath(buildConfig)
-          buildTarget(buildConfig['app'])
         }
 
         echo "${buildConfig}"
@@ -49,6 +48,9 @@ pipeline {
         }
       }
       steps {
+        script {
+          buildTarget(buildConfig['hello'])
+        }
         echo "${buildConfig['hello']}"
       }
     }
