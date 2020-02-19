@@ -40,11 +40,12 @@ pipeline {
             echo "${config}"
             echo "${config.key}"
             tests["${config.key}"] = {
-              node {
-                stage("${config.key}") {
-                  echo 'test'
-                }
-              }
+              // node {
+              //   stage("${config.key}") {
+              //     echo 'test'
+              //   }
+              // }
+              echo "build.. ${config.key}"
             }
           }
 
@@ -121,13 +122,13 @@ def findTargetPath(buildConfig) {
   }
 }
 
-@NonCPS
-def buildTarget(buildConfig, identity, userName) {
-  def remote = [:]
-  remote.name = env.REMOTE_SSH_HOST
-  remote.host = env.REMOTE_SSH_HOST
-  remote.allowAnyHosts = true
-  remote.user = userName
-  remote.identityFile = identity
-  sshCommand remote: remote, command: "${buildConfig.build}"
-}
+// @NonCPS
+// def buildTarget(buildConfig, identity, userName) {
+//   def remote = [:]
+//   remote.name = env.REMOTE_SSH_HOST
+//   remote.host = env.REMOTE_SSH_HOST
+//   remote.allowAnyHosts = true
+//   remote.user = userName
+//   remote.identityFile = identity
+//   sshCommand remote: remote, command: "${buildConfig.build}"
+// }
