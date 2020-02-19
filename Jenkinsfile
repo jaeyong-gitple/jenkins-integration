@@ -54,7 +54,7 @@ pipeline {
       // }
       steps {
         script {
-          buildTarget(buildConfig['hello'])
+          buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
         }
         echo "${buildConfig['hello']}"
       }
