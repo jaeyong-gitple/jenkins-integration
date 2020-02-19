@@ -32,34 +32,32 @@ pipeline {
       }
     }
 
-    stages {
-      stage('Build') {
-        parallel {
-          stage('Build: app') {
-            // when {
-            //   expression {
-            //     return buildConfig['app'].isChanged
-            //   }
-            // }
-            steps {
-              script {
-                buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
-              }
-              echo "${buildConfig['app']}"
+    stage('Build') {
+      parallel {
+        stage('Build: app') {
+          // when {
+          //   expression {
+          //     return buildConfig['app'].isChanged
+          //   }
+          // }
+          steps {
+            script {
+              buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
             }
+            echo "${buildConfig['app']}"
           }
-          stage('Build: hello') {
-            // when {
-            //   expression {
-            //     return buildConfig['hello'].isChanged
-            //   }
-            // }
-            steps {
-              script {
-                buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
-              }
-              echo "${buildConfig['hello']}"
+        }
+        stage('Build: hello') {
+          // when {
+          //   expression {
+          //     return buildConfig['hello'].isChanged
+          //   }
+          // }
+          steps {
+            script {
+              buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
             }
+            echo "${buildConfig['hello']}"
           }
         }
       }
