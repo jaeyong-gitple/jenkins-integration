@@ -32,31 +32,36 @@ pipeline {
       }
     }
 
-
-    stage('Build: app') {
-      // when {
-      //   expression {
-      //     return buildConfig['app'].isChanged
-      //   }
-      // }
-      steps {
-        script {
-          buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
+    stages {
+      stage('Build') {
+        parallel {
+          stage('Build: app') {
+            // when {
+            //   expression {
+            //     return buildConfig['app'].isChanged
+            //   }
+            // }
+            steps {
+              script {
+                buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
+              }
+              echo "${buildConfig['app']}"
+            }
+          }
+          stage('Build: hello') {
+            // when {
+            //   expression {
+            //     return buildConfig['hello'].isChanged
+            //   }
+            // }
+            steps {
+              script {
+                buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
+              }
+              echo "${buildConfig['hello']}"
+            }
+          }
         }
-        echo "${buildConfig['app']}"
-      }
-    }
-    stage('Build: hello') {
-      // when {
-      //   expression {
-      //     return buildConfig['hello'].isChanged
-      //   }
-      // }
-      steps {
-        script {
-          buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
-        }
-        echo "${buildConfig['hello']}"
       }
     }
 
@@ -98,13 +103,11 @@ def findTargetPath(buildConfig) {
 
 @NonCPS
 def buildTarget(buildConfig, identity, userName) {
-  // withCredentials([sshUserPrivateKey(credentialsId: 'ci-ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-    def remote = [:]
-    remote.name = env.REMOTE_SSH_HOST
-    remote.host = env.REMOTE_SSH_HOST
-    remote.allowAnyHosts = true
-    remote.user = userName
-    remote.identityFile = identity
-    sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;ls'
-  // }
+  def remote = [:]
+  remote.name = env.REMOTE_SSH_HOST
+  remote.host = env.REMOTE_SSH_HOST
+  remote.allowAnyHosts = true
+  remote.user = userName
+  remote.identityFile = identity
+  sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;ls'
 }
