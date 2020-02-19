@@ -3,8 +3,9 @@
 pipeline {
   agent any
   environment {
-    REMOTE_HOST = 'ci-staging.mspdev.link'
-    REMOTE_USER = 'ubuntu'
+    REMOTE_SSH_HOST = 'ci-staging.mspdev.link'
+    REMOTE_SSH_USER = 'ubuntu'
+    REMOTE_SSH_CREDS = credentials('ci-ssh')
   }
   stages {
     stage('Prepare') {
@@ -19,19 +20,12 @@ pipeline {
         }
 
         echo "${buildConfig}"
+
+        sh 'echo "SSH private key is located at $REMOTE_SSH_CREDS"'
+        sh 'echo "SSH user is $REMOTE_SSH_CREDS_USR"'
         // default env
         // GIT_COMMIT=520843eb66353c8dfa40ca24c82dced3beafc482
         // GIT_BRANCH=develop
-
-        withCredentials([sshUserPrivateKey(credentialsId: 'ci-ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-          def remote = [:]
-          remote.name = env.REMOTE_HOST
-          remote.host = env.REMOTE_HOST
-          remote.allowAnyHosts = true
-          remote.user = $userName
-          remote.identityFile = $identity 
-          sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;ls'
-        }
 
         sh "printenv"
       }
@@ -103,13 +97,13 @@ def findTargetPath(buildConfig) {
 
 @NonCPS
 def buildTarget(buildConfig) {
-  withCredentials([sshUserPrivateKey(credentialsId: 'ci-ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-    def remote = [:]
-    remote.name = env.REMOTE_HOST
-    remote.host = env.REMOTE_HOST
-    remote.allowAnyHosts = true
-    remote.user = $userName
-    remote.identityFile = $identity 
-    sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;ls'
-  }
+  // withCredentials([sshUserPrivateKey(credentialsId: 'ci-ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+  //   def remote = [:]
+  //   remote.name = env.REMOTE_HOST
+  //   remote.host = env.REMOTE_HOST
+  //   remote.allowAnyHosts = true
+  //   remote.user = $userName
+  //   remote.identityFile = $identity 
+  //   sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;ls'
+  // }
 }
