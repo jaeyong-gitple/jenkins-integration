@@ -29,11 +29,11 @@ pipeline {
 
 
     stage('Build: app') {
-      when {
-        expression {
-          return buildConfig['app'].isChanged
-        }
-      }
+      // when {
+      //   expression {
+      //     return buildConfig['app'].isChanged
+      //   }
+      // }
       steps {
         script {
           buildTarget(buildConfig['app'])
@@ -42,11 +42,11 @@ pipeline {
       }
     }
     stage('Build: hello') {
-      when {
-        expression {
-          return buildConfig['hello'].isChanged
-        }
-      }
+      // when {
+      //   expression {
+      //     return buildConfig['hello'].isChanged
+      //   }
+      // }
       steps {
         script {
           buildTarget(buildConfig['hello'])
