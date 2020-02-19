@@ -36,7 +36,7 @@ pipeline {
       steps {
         script {
           def tests = [:]
-          for (config in buildTarget) {
+          for (config in buildConfig) {
             tests["${config.key}"] = {
               node {
                 stage("${config.key}") {
