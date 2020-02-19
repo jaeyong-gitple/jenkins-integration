@@ -38,6 +38,7 @@ pipeline {
           def tests = [:]
           for (config in buildConfig) {
             echo "${config}"
+            echo "${config.key}"
             // tests["${config.key}"] = {
             //   node {
             //     stage("${config.key}") {
