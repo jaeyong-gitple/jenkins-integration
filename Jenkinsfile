@@ -26,7 +26,6 @@ pipeline {
         // default env
         // GIT_COMMIT=520843eb66353c8dfa40ca24c82dced3beafc482
         // GIT_BRANCH=develop
-
         sh "printenv"
       }
     }
@@ -40,7 +39,7 @@ pipeline {
       // }
       steps {
         script {
-          buildTarget(buildConfig['app'])
+          buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS_KEY, env.REMOTE_SSH_CREDS_USR)
         }
         echo "${buildConfig['app']}"
       }
@@ -96,14 +95,14 @@ def findTargetPath(buildConfig) {
 }
 
 @NonCPS
-def buildTarget(buildConfig) {
+def buildTarget(buildConfig, identity, userName) {
   // withCredentials([sshUserPrivateKey(credentialsId: 'ci-ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-  //   def remote = [:]
-  //   remote.name = env.REMOTE_HOST
-  //   remote.host = env.REMOTE_HOST
-  //   remote.allowAnyHosts = true
-  //   remote.user = $userName
-  //   remote.identityFile = $identity 
-  //   sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;ls'
+    def remote = [:]
+    remote.name = env.REMOTE_HOST
+    remote.host = env.REMOTE_HOST
+    remote.allowAnyHosts = true
+    remote.user = userName
+    remote.identityFile = identity
+    sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;ls'
   // }
 }
