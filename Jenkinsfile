@@ -37,13 +37,14 @@ pipeline {
         script {
           def tests = [:]
           for (config in buildConfig) {
-            tests["${config.key}"] = {
-              node {
-                stage("${config.key}") {
-                    echo '${config.key}'
-                }
-              }
-            }
+            echo "${config}"
+            // tests["${config.key}"] = {
+            //   node {
+            //     stage("${config.key}") {
+            //       echo '${config.key}'
+            //     }
+            //   }
+            // }
           }
           parallel tests
         }
