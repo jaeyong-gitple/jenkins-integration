@@ -98,8 +98,8 @@ def findTargetPath(buildConfig) {
 def buildTarget(buildConfig, identity, userName) {
   // withCredentials([sshUserPrivateKey(credentialsId: 'ci-ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
     def remote = [:]
-    remote.name = env.REMOTE_HOST
-    remote.host = env.REMOTE_HOST
+    remote.name = env.REMOTE_SSH_HOST
+    remote.host = env.REMOTE_SSH_HOST
     remote.allowAnyHosts = true
     remote.user = userName
     remote.identityFile = identity
