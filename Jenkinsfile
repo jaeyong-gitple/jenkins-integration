@@ -42,7 +42,7 @@ pipeline {
             tests["${config.key}"] = {
               // node {
                 stage("${config.key}") {
-                  echo '${config.key}'
+                  echo "${config.key}"
                 }
               // }
             }
