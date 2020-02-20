@@ -83,7 +83,7 @@ def syncRemoteGit(identity, userName, branch, commit) {
 
   println "git info branch:'${branch}', commit-hash:'${commit}'"
 
-  sshCommand remote: remote, command: "cd $TP_TARGET_SOURCE;git status"
+  sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE;git status'
 }
 
 @NonCPS
@@ -105,7 +105,7 @@ def findTargetPath(buildConfig) {
           // println "config key: ${config.key}"
           // println "config value: ${config.value}"
           if (filePath ==~ /${config.value.path}(.*)/) {
-            println "found Path '${filePath}' contains '${config}'"
+            // println "found Path '${filePath}' contains '${config}'"
             config.value.isChanged = true
           }
         }
