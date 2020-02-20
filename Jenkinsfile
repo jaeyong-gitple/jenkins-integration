@@ -17,74 +17,51 @@ pipeline {
           buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'cd $TP_TARGET_SOURCE;ls;echo "hello make..."']
 
           findTargetPath(buildConfig)
+          syncRemoteGit(env.GIT_BRANCH, env.GIT_COMMIT)
         }
 
-        echo "${buildConfig}"
+        // echo "${buildConfig}"
 
-        sh 'echo "SSH private key is located at $REMOTE_SSH_CREDS"'
-        sh 'echo "SSH user is $REMOTE_SSH_CREDS_USR"'
-        sh 'echo "SSH key is $REMOTE_SSH_CREDS"'
+        // sh 'echo "SSH private key is located at $REMOTE_SSH_CREDS"'
+        // sh 'echo "SSH user is $REMOTE_SSH_CREDS_USR"'
+        // sh 'echo "SSH key is $REMOTE_SSH_CREDS"'
 
         // default env
         // GIT_COMMIT=520843eb66353c8dfa40ca24c82dced3beafc482
         // GIT_BRANCH=develop
-        sh "printenv"
+        // sh "printenv"
       }
     }
-
-    stage('1') {
-      steps {
-        script {
-          def tests = [:]
-          for (config in buildConfig) {
-            echo "${config}"
-            echo "${config.key}"
-            tests["${config.key}"] = {
-              // node {
-              //   stage("${config.key}") {
-              //     echo 'test'
-              //   }
-              // }
-              echo "build.. ${config.key}"
+    stage('Build') {
+      parallel {
+        stage('Build: app') {
+          // when {
+          //   expression {
+          //     return buildConfig['app'].isChanged
+          //   }
+          // }
+          steps {
+            script {
+              buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
             }
+            echo "${buildConfig['app']}"
           }
-
-          echo "${tests}"
-          parallel tests
+        }
+        stage('Build: hello') {
+          // when {
+          //   expression {
+          //     return buildConfig['hello'].isChanged
+          //   }
+          // }
+          steps {
+            script {
+              buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
+            }
+            echo "${buildConfig['hello']}"
+          }
         }
       }
     }
-
-    // stage('Build') {
-    //   parallel {
-    //     stage('Build: app') {
-    //       // when {
-    //       //   expression {
-    //       //     return buildConfig['app'].isChanged
-    //       //   }
-    //       // }
-    //       steps {
-    //         script {
-    //           buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
-    //         }
-    //         echo "${buildConfig['app']}"
-    //       }
-    //     }
-    //     stage('Build: hello') {
-    //       // when {
-    //       //   expression {
-    //       //     return buildConfig['hello'].isChanged
-    //       //   }
-    //       // }
-    //       steps {
-    //         script {
-    //           buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
-    //         }
-    //         echo "${buildConfig['hello']}"
-    //       }
-    //     }
-    //   }
-    // }
 
     stage('Test') {
       steps {
@@ -92,6 +69,21 @@ pipeline {
       }
     }
   }
+}
+
+
+@NonCPS
+def syncRemoteGit(branch, commit) {
+  def remote = [:]
+  remote.name = env.REMOTE_SSH_HOST
+  remote.host = env.REMOTE_SSH_HOST
+  remote.allowAnyHosts = true
+  remote.user = userName
+  remote.identityFile = identity
+
+  println "git info branch:'${branch}', commit-hash:'${commit}'"
+
+  sshCommand remote: remote, command: "cd $TP_TARGET_SOURCE;git status"
 }
 
 @NonCPS
@@ -122,13 +114,13 @@ def findTargetPath(buildConfig) {
   }
 }
 
-// @NonCPS
-// def buildTarget(buildConfig, identity, userName) {
-//   def remote = [:]
-//   remote.name = env.REMOTE_SSH_HOST
-//   remote.host = env.REMOTE_SSH_HOST
-//   remote.allowAnyHosts = true
-//   remote.user = userName
-//   remote.identityFile = identity
-//   sshCommand remote: remote, command: "${buildConfig.build}"
-// }
+@NonCPS
+def buildTarget(buildConfig, identity, userName) {
+  def remote = [:]
+  remote.name = env.REMOTE_SSH_HOST
+  remote.host = env.REMOTE_SSH_HOST
+  remote.allowAnyHosts = true
+  remote.user = userName
+  remote.identityFile = identity
+  sshCommand remote: remote, command: "${buildConfig.build}"
+}
