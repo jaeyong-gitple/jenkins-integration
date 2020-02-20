@@ -17,7 +17,7 @@ pipeline {
           buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'cd $TP_TARGET_SOURCE;ls;echo "hello make..."']
 
           findTargetPath(buildConfig)
-          syncRemoteGit(env.GIT_BRANCH, env.GIT_COMMIT)
+          syncRemoteGit(env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR, env.GIT_BRANCH, env.GIT_COMMIT)
         }
 
         // echo "${buildConfig}"
@@ -73,7 +73,7 @@ pipeline {
 
 
 @NonCPS
-def syncRemoteGit(branch, commit) {
+def syncRemoteGit(identity, userName, branch, commit) {
   def remote = [:]
   remote.name = env.REMOTE_SSH_HOST
   remote.host = env.REMOTE_SSH_HOST
