@@ -12,7 +12,6 @@ pipeline {
       steps {
         script {
           buildConfig = [:]
-
           buildConfig.app = [path: 'server/app', isChanged: false , build: 'cd $TP_TARGET_SOURCE;ls;echo "app make..."']
           buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'cd $TP_TARGET_SOURCE;ls;echo "hello make..."']
 
@@ -24,29 +23,26 @@ pipeline {
     stage('Build') {
       parallel {
         stage('Build: app') {
-          // when {
-          //   expression {
-          //     return buildConfig['app'].isChanged
-          //   }
-          // }
+          when {
+            expression {
+              return buildConfig['app'].isChanged
+            }
+          }
           steps {
             script {
               buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
             }
-            echo "${buildConfig['app']}"
           }
         }
         stage('Build: hello') {
-          // when {
-          //   expression {
-          //     return buildConfig['hello'].isChanged
-          //   }
-          // }
+          when {
+            expression {return buildConfig['hello'].isChanged
+            }
+          }
           steps {
             script {
               buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
             }
-            echo "${buildConfig['hello']}"
           }
         }
       }
