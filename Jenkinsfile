@@ -19,17 +19,6 @@ pipeline {
           findTargetPath(buildConfig)
           syncRemoteGit(env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR, env.GIT_BRANCH, env.GIT_COMMIT)
         }
-
-        // echo "${buildConfig}"
-
-        // sh 'echo "SSH private key is located at $REMOTE_SSH_CREDS"'
-        // sh 'echo "SSH user is $REMOTE_SSH_CREDS_USR"'
-        // sh 'echo "SSH key is $REMOTE_SSH_CREDS"'
-
-        // default env
-        // GIT_COMMIT=520843eb66353c8dfa40ca24c82dced3beafc482
-        // GIT_BRANCH=develop
-        // sh "printenv"
       }
     }
     stage('Build') {
