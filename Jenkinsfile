@@ -66,10 +66,10 @@ def syncRemoteGit(identity, userName, branch, commit) {
   remote.identityFile = identity
 
   println "git info branch:'${branch}', commit-hash:'${commit}'"
-  def gitCheckout = "git checkout - '${branch}' '${commit}'"
+  def gitCheckout = "git checkout -b ${branch} ${commit}"
   echo "${gitCheckout}"
 
-  sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE; git checkout -b ${branch}'
+  sshCommand remote: remote, command: 'cd $TP_TARGET_SOURCE; git status'
 }
 
 @NonCPS
