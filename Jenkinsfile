@@ -9,7 +9,7 @@ pipeline {
   environment {
     REMOTE_SSH_HOST = 'ci-staging.mspdev.link'
     REMOTE_SSH_USER = 'ubuntu'
-    REMOTE_SSH_CREDS = credentials('ci-ssh')
+    REMOTE_SSH_CREDS = credentials('dev-ci-ssh')
   }
   stages {
     stage('Prepare') {
