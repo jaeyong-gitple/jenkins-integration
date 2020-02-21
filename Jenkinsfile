@@ -23,11 +23,11 @@ pipeline {
     stage('Build') {
       parallel {
         stage('Build: app') {
-          // when {
-          //   expression {
-          //     return buildConfig['app'].isChanged
-          //   }
-          // }
+          when {
+            expression {
+              return buildConfig['app'].isChanged
+            }
+          }
           steps {
             script {
               buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
