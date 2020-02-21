@@ -1,5 +1,9 @@
 #!groovy
 
+def buildConfig = [:]
+buildConfig.app = [path: 'server/app', isChanged: false , build: 'cd $TP_TARGET_SOURCE;ls;echo "app make..."']
+buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'cd $TP_TARGET_SOURCE;ls;echo "hello make..."']
+
 pipeline {
   agent any
   environment {
@@ -11,10 +15,6 @@ pipeline {
     stage('Prepare') {
       steps {
         script {
-          buildConfig = [:]
-          buildConfig.app = [path: 'server/app', isChanged: false , build: 'cd $TP_TARGET_SOURCE;ls;echo "app make..."']
-          buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'cd $TP_TARGET_SOURCE;ls;echo "hello make..."']
-
           findTargetPath(buildConfig)
           syncRemoteGit(env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR, env.GIT_BRANCH, env.GIT_COMMIT)
         }
