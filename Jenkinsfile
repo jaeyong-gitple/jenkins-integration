@@ -34,10 +34,10 @@ pipeline {
           }
         }
         stage('Build: hello') {
-          // when {
-          //   expression {return buildConfig['hello'].isChanged
-          //   }
-          // }
+          when {
+            expression {return buildConfig['hello'].isChanged
+            }
+          }
           steps {
             script {
               buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
