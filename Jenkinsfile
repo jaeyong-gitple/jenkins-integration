@@ -22,26 +22,18 @@ pipeline {
     stage('Build') {
       parallel {
         stage('Build: app') {
-          // when {
-          //   expression {
-          //     return buildConfig['app'].isChanged
-          //   }
-          // }
+          when {
+            expression { buildConfig['app'].isChanged }
+          }
           steps {
-            script {
-              buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
-            }
+            script { buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR) }
           }
         }
         stage('Build: hello') {
-          when {
-            expression {return buildConfig['hello'].isChanged
-            }
+          when { expression { buildConfig['hello'].isChanged }
           }
           steps {
-            script {
-              buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR)
-            }
+            script { buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR) }
           }
         }
       }
@@ -66,10 +58,10 @@ def syncRemoteGit(identity, userName, branch, commit) {
   remote.identityFile = identity
 
   println "git info branch:'${branch}', commit-hash:'${commit}'"
-  def gitCheckout = "cd \$TP_TARGET_SOURCE; echo 'git checkout -b ${branch} ${commit}'"
-  echo "${gitCheckout}"
+  def gitCheckout = "cd \$TP_TARGET_SOURCE; git checkout -b ${branch} ${commit}"
+  // echo "${gitCheckout}"
 
-  sshCommand remote: remote, command: "${gitCheckout}"
+  // sshCommand remote: remote, command: "${gitCheckout}"
 }
 
 @NonCPS
