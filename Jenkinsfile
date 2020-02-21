@@ -7,8 +7,7 @@ buildConfig.hello = [path: 'server/hello', isChanged: false , build: 'cd $TP_TAR
 pipeline {
   agent any
   environment {
-    REMOTE_SSH_HOST = 'ci-staging.mspdev.link'
-    REMOTE_SSH_USER = 'ubuntu'
+    REMOTE_SSH_HOST = 'ci-dev.raidea.io'
     REMOTE_SSH_CREDS = credentials('dev-ci-ssh')
   }
   stages {
