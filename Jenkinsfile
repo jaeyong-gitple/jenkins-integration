@@ -27,10 +27,9 @@ pipeline {
           }
         }
         stage('Build: hello') {
-          when { expression { buildConfig['hello'].isChanged }
           }
           steps {
-            script { buildTarget(buildConfig['hello'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR) }
+            build job: 'jenkins-integration-hello', propagate: true, wait: true
           }
         }
       }
