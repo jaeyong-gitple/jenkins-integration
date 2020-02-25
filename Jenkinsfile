@@ -23,12 +23,12 @@ pipeline {
       parallel {
         stage('Build: app') {
           steps {
-            build job: 'jenkins-integration-app', propagate: true, wait: true
+            build(job: 'jenkins-integration-app', wait: true)
           }
         }
         stage('Build: hello') {
           steps {
-            build job: 'jenkins-integration-hello', propagate: true, wait: true
+            build(job: 'jenkins-integration-hello', wait: true)
           }
         }
       }
