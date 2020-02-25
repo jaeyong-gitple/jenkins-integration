@@ -22,11 +22,8 @@ pipeline {
     stage('Build') {
       parallel {
         stage('Build: app') {
-          when {
-            expression { buildConfig['app'].isChanged }
-          }
           steps {
-            script { buildTarget(buildConfig['app'], env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR) }
+            build job: 'jenkins-integration-app', propagate: true, wait: true
           }
         }
         stage('Build: hello') {
