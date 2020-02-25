@@ -27,7 +27,6 @@ pipeline {
           }
         }
         stage('Build: hello') {
-          }
           steps {
             build job: 'jenkins-integration-hello', propagate: true, wait: true
           }
