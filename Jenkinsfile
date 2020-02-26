@@ -13,6 +13,9 @@ pipeline {
   stages {
     stage('Prepare') {
       steps {
+
+        error("Invalid target environment: ${env.GIT_BRANCH}")
+
         script {
           findTargetPath(buildConfig)
          
