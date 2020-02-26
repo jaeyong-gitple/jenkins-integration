@@ -13,11 +13,11 @@ pipeline {
   stages {
     stage('Prepare') {
       steps {
-        if (env.BRANCH_NAME != 'master') {
-          error("Invalid target branch: ${env.GIT_BRANCH}")
-        }
-
         script {
+          if (env.BRANCH_NAME != 'master') {
+            error("Invalid target branch: ${env.GIT_BRANCH}")
+          }
+
           findTargetPath(buildConfig)
          
           env.GIT_COMMIT_MSG = sh (script: "git log -1 --pretty=%B ${env.GIT_COMMIT}", returnStdout: true).trim()
