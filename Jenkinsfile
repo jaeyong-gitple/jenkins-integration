@@ -15,7 +15,6 @@ pipeline {
       steps {
         script {
           findTargetPath(buildConfig)
-          syncRemoteGit(env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR, env.GIT_BRANCH, env.GIT_COMMIT)
          
           env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${env.GIT_COMMIT}', returnStdout: true).trim()
         }
