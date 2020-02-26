@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Build: hello') {
           steps {
-            build(job: 'jenkins-integration-hello', parameters: [[$class: 'StringParameterValue', name: 'param1', value: 'hello']], wait: true)
+            build(job: 'jenkins-integration-hello', parameters: [[$class: 'StringParameterValue', name: 'param1', value: 'hello11111']], wait: true)
           }
         }
       }
