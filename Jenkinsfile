@@ -176,9 +176,12 @@ WARNING: Published ports are discarded when using host network mode
 53fbbab61bf6e90648e88cb55a7286def0b16b950e9bddad32e6b89601619869
 make: Leaving directory '/home/ubuntu/MSP_DEV/deploy'
 <<< Leaving node: dev-user_service1        
-          """
+          """ 
 
-          sh("echo \"${output}\" | grep 'REGISTRY-VERSION=' | tail -1 | awk -F ':' '{print \$2}'")
+          def REGISTRY_VERSION = sh(script:"echo \"${output}\" | grep 'REGISTRY-VERSION=' | tail -1 | awk -F ':' '{print \$2}'", returnStdout:true).trim()
+
+          echo "REGISTRY_VERSION: ${REGISTRY_VERSION}"
+
         }
       }
     }
