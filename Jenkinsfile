@@ -28,12 +28,12 @@ pipeline {
       parallel {
         stage('Build: app') {
           steps {
-            build(job: 'jenkins-integration-app', parameters: [[$class: 'StringParameterValue', name: 'message', value: env.GIT_COMMIT_MSG, description: 'commit message']], wait: true)
+            build(job: 'jenkins-integration-app', parameters: [[$class: 'StringParameterValue', name: 'message', value: env.GIT_COMMIT_MSG]], wait: true)
           }
         }
         stage('Build: hello') {
           steps {
-            build(job: 'jenkins-integration-hello', parameters: [[$class: 'StringParameterValue', name: 'message', value: env.GIT_COMMIT_MSG, description: 'commit message']], wait: true)
+            build(job: 'jenkins-integration-hello', parameters: [[$class: 'StringParameterValue', name: 'message', value: env.GIT_COMMIT_MSG]], wait: true)
           }
         }
       }
