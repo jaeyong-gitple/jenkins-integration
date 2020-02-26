@@ -30,7 +30,8 @@ pipeline {
     }
     stage('sh test') {
       steps {
-        def output = """
+        script {
+          def output = """
 =================[ init_config ]=================
 =================[ user_service ]=================
 Configuration on demand is an incubating feature.
@@ -175,9 +176,10 @@ WARNING: Published ports are discarded when using host network mode
 53fbbab61bf6e90648e88cb55a7286def0b16b950e9bddad32e6b89601619869
 make: Leaving directory '/home/ubuntu/MSP_DEV/deploy'
 <<< Leaving node: dev-user_service1        
-        """
+          """
 
-        echo "${output}"
+          echo "${output}"
+        }
       }
     }
     stage('Build') {
