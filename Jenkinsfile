@@ -178,7 +178,7 @@ make: Leaving directory '/home/ubuntu/MSP_DEV/deploy'
 <<< Leaving node: dev-user_service1        
           """
 
-          sh("echo ${output} | grep 'REGISTRY-VERSION=' | tail -1 | awk -F ':' '{print \$2}'")
+          sh("echo \"${output}\" | grep 'REGISTRY-VERSION=' | tail -1 | awk -F ':' '{print \$2}'")
         }
       }
     }
