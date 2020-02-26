@@ -17,6 +17,8 @@ pipeline {
           findTargetPath(buildConfig)
           syncRemoteGit(env.REMOTE_SSH_CREDS, env.REMOTE_SSH_CREDS_USR, env.GIT_BRANCH, env.GIT_COMMIT)
         }
+
+        echo 'GIT_COMMIT: ${env.GIT_COMMIT}'
       }
     }
     stage('Build') {
