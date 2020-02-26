@@ -23,12 +23,12 @@ pipeline {
       parallel {
         stage('Build: app') {
           steps {
-            build(job: 'jenkins-integration-app', wait: true)
+            build(job: 'jenkins-integration-app', parameters: [[$class: 'StringParameterValue', name: 'target', value: 'app']], wait: true)
           }
         }
         stage('Build: hello') {
           steps {
-            build(job: 'jenkins-integration-hello', wait: true)
+            build(job: 'jenkins-integration-hello', parameters: [[$class: 'StringParameterValue', name: 'target', value: 'hello']], wait: true)
           }
         }
       }
