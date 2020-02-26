@@ -16,7 +16,7 @@ pipeline {
         script {
           findTargetPath(buildConfig)
          
-          env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${env.GIT_COMMIT}', returnStdout: true).trim()
+          env.GIT_COMMIT_MSG = sh (script: "git log -1 --pretty=%B ${env.GIT_COMMIT}", returnStdout: true).trim()
         }
 
         echo "GIT_COMMIT: ${env.GIT_COMMIT}"
