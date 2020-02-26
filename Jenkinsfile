@@ -13,8 +13,9 @@ pipeline {
   stages {
     stage('Prepare') {
       steps {
-
-        error("Invalid target environment: ${env.GIT_BRANCH}")
+        if (env.BRANCH_NAME != 'master') {
+          error("Invalid target branch: ${env.GIT_BRANCH}")
+        }
 
         script {
           findTargetPath(buildConfig)
