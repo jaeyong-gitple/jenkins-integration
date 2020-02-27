@@ -202,7 +202,7 @@ make: Leaving directory '/home/ubuntu/MSP_DEV/deploy'
 
     stage('Test') {
       steps {
-        echo 'Testing..'
+        echo 'Testing..test'
       }
     }
   }
